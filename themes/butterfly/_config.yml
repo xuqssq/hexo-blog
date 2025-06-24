@@ -25,7 +25,7 @@ menu:
     音乐: /music/ || fas fa-music
     相册: /photos/ || fas fa-video
   友链: /link/ || fas fa-link
-  关于: https://daojianime.github.io/ || fas fa-heart
+  关于: https://xuqssq.github.io/ || fas fa-heart
 
 # --------------------------------------
 # Code Blocks Settings
@@ -52,11 +52,11 @@ code_blocks:
 social:
   # fab fa-github: https://github.com/xxxxx || Github || '#24292e'
   # fas fa-envelope: mailto:xxxxxx@gmail.com || Email || '#4a7dbe'
-  fab fa-github: https://github.com/daojiAnime || Github || '#24292e'
-  fab fa-qq: tencent://message/?uin=133397418 || QQ || '#12B7F5'
+  fab fa-github: https://github.com/xuqssq || Github || '#24292e'
+  fab fa-qq: tencent://message/?uin=2035805156 || QQ || '#12B7F5'
   fab fa-weixin: /assets/img/weixin.jpg || 微信 || '#07C160'
   fa-solid fa-rss: /atom.xml || RSS || '#FFA500'
-  fas fa-envelope: mailto:daoji.chang@gmail.com || Email || '#4a7dbe'
+  fas fa-envelope: mailto:xuqssq@gmail.com || Email || '#4a7dbe'
 # --------------------------------------
 # Image Settings
 # --------------------------------------
@@ -64,7 +64,7 @@ social:
 favicon: /assets/favicon.ico
 
 avatar:
-  img: https://i.imgur.com/6DEulXU.jpg
+  img: /assets/mine.jpg
   effect: false
 
 # Disable all banner images
@@ -1043,7 +1043,7 @@ aside:
       enable: true
       icon: fab fa-github
       text: Follow Me
-      link: https://github.com/xxxxxx
+      link: https://github.com/xuqssq
   card_announcement:
     enable: true
     content: This is my Blog
@@ -1463,7 +1463,7 @@ umami_analytics:
 google_adsense:
   enable: false
   auto_ads: true
-  js: https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js
+  js: https://www.googletagmanager.com/gtag/js?id=G-KZ4Q28C1NS
   client:
   enable_page_level_ads: true
 
