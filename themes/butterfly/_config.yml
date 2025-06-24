@@ -1433,8 +1433,7 @@ crisp:
 baidu_analytics:
 
 # https://analytics.google.com/analytics/web/
-google_analytics:
-
+google_analytics: G-KZ4Q28C1NS
 # https://www.cloudflare.com/zh-tw/web-analytics/
 cloudflare_analytics:
 
@@ -1463,7 +1462,7 @@ umami_analytics:
 google_adsense:
   enable: false
   auto_ads: true
-  js: https://www.googletagmanager.com/gtag/js?id=G-KZ4Q28C1NS
+  js: 
   client:
   enable_page_level_ads: true
 
