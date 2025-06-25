@@ -74,7 +74,7 @@ disable_top_img: false
 default_top_img: https://i.imgur.com/jRNf3kb.png
 
 # The banner image of index page
-index_img: https://i.imgur.com/VeZhnNU.png
+index_img: /assets/banner.png
 
 # The banner image of archive page
 archive_img: https://i.imgur.com/jRNf3kb.png
