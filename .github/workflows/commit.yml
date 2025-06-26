@@ -109,12 +109,12 @@ jobs:
         run: |
           yarn writer
 
-          - name: Setup SSH Key
-          run: |
-            mkdir -p ~/.ssh/
-            echo "${{ secrets.HEXO_DEPLOY_KEY }}" > ~/.ssh/id_rsa
-            chmod 600 ~/.ssh/id_rsa
-            ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
+      - name: Setup SSH Key
+        run: |
+          mkdir -p ~/.ssh/
+          echo "${{ secrets.HEXO_DEPLOY_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
       - name: Setup Git Config
         run: |
           git config --global user.name "qian"
