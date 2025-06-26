@@ -121,8 +121,8 @@ jobs:
           git config --global user.email "xuqssq@163.com"
       - name: Install Hexo
         run: |
-          yarn install hexo-cli -g
-          yarn install hexo-deployer-git --save
+          yarn global add hexo-cli
+          yarn add hexo-deployer-git
       - name: Deploy Hexo
         run: |
           hexo g -d -m "${{ steps.commit-message.outputs.message }}"
