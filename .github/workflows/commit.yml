@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  bots:
+  build:
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -21,14 +21,25 @@ jobs:
         with:
           fetch-depth: 0
           token: ${{ secrets.ACCOUNT_TOKEN }}
+          submodules: true
 
       - name: "Set node"
         uses: actions/setup-node@v3
         with:
           node-version: 22.x
 
+      - name: Cache node modules
+        uses: actions/cache@v1
+        id: cache
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
       - name: "Install"
-        run: npm install
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm ci
 
       - name: "Generate commit message"
         id: commit-message
@@ -95,19 +106,23 @@ jobs:
       - name: "Run bash"
         run: |
           npm run writer
-      - name: "Configure Git"
+      
+      - name: Deploy
+        id: deploy
+        uses: sma11black/hexo-action@v1.0.3
+        with:
+            deploy_key: ${{ secrets.HEXO_DEPLOY_KEY }}
+            user_name: qian
+            user_email: xuqssq@163.com
+            commit_msg: ${{ steps.commit-message.outputs.message }}
+      - name: Get the output
         run: |
-          git config --global user.email "xuqssq@163.com"
-          git config --global user.name "qian"
-
-      - name: "Run bash"
-        env:
-          GITHUB_TOKEN: ${{ secrets.ACCOUNT_TOKEN }}
-        run: |
-          npm run deploy
+          echo "${{ steps.deploy.outputs.notify }}"
 
       - name: "Commit and Push"
         run: |
+          git config --global user.email "xuqssq@163.com"
+          git config --global user.name "qian"
           git add source/*
           git commit -m "${{ steps.commit-message.outputs.message }}" || echo "No changes to commit"
           git push origin HEAD:${GITHUB_REF#refs/heads/}
