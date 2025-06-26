@@ -109,22 +109,26 @@ jobs:
         run: |
           yarn writer
 
-      - name: Deploy
-        id: deploy
-        uses: sma11black/hexo-action@v1.0.3
-        with:
-          deploy_key: ${{ secrets.HEXO_DEPLOY_KEY }}
-          user_name: qian
-          user_email: xuqssq@163.com
-          commit_msg: ${{ steps.commit-message.outputs.message }}
-      - name: Get the output
+      - name: Configuration environment
+        env:
+          HEXO_DEPLOY_PRI: ${{secrets.HEXO_DEPLOY_KEY}}
         run: |
-          echo "${{ steps.deploy.outputs.notify }}"
+          sudo timedatectl set-timezone "Asia/Shanghai"
+          mkdir -p ~/.ssh/
+          echo "$HEXO_DEPLOY_PRI" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
+          git config --global user.name qian
+          git config --global user.email xuqssq@163.com
+
+      - name: Deploy hexo
+        run: |
+          npm run deploy
 
       - name: "Commit and Push"
         run: |
-          git config --global user.email "xuqssq@163.com"
           git config --global user.name "qian"
+          git config --global user.email "xuqssq@163.com"
           git add source/*
           git commit -m "${{ steps.commit-message.outputs.message }}" || echo "No changes to commit"
           git push origin HEAD:${GITHUB_REF#refs/heads/}
