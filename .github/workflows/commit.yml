@@ -26,7 +26,7 @@ jobs:
       - name: "Set node"
         uses: actions/setup-node@v4
         with:
-          node-version: 16.x
+          node-version: 22.x
 
       - name: Cache node modules
         uses: actions/cache@v4
@@ -109,14 +109,23 @@ jobs:
         run: |
           yarn writer
 
-      - name: Deploy
-        id: deploy
-        uses: sma11black/hexo-action@v1.0.3
-        with:
-          deploy_key: ${{ secrets.HEXO_DEPLOY_KEY }}
-          user_name: qian
-          user_email: xuqssq@163.com
-          commit_msg: ${{ steps.commit-message.outputs.message }}
+          - name: Setup SSH Key
+          run: |
+            mkdir -p ~/.ssh/
+            echo "${{ secrets.HEXO_DEPLOY_KEY }}" > ~/.ssh/id_rsa
+            chmod 600 ~/.ssh/id_rsa
+            ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
+      - name: Setup Git Config
+        run: |
+          git config --global user.name "qian"
+          git config --global user.email "xuqssq@163.com"
+      - name: Install Hexo
+        run: |
+          yarn install hexo-cli -g
+          yarn install hexo-deployer-git --save
+      - name: Deploy Hexo
+        run: |
+          hexo g -d -m "${{ steps.commit-message.outputs.message }}"
 
       - name: "Commit and Push"
         run: |
