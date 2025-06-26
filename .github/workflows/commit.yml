@@ -32,14 +32,16 @@ jobs:
         uses: actions/cache@v4
         id: cache
         with:
-          path: node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          path: |
+            node_modules
+            ~/.yarn/cache
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-node-
+            ${{ runner.os }}-yarn-
 
       - name: "Install"
         if: steps.cache.outputs.cache-hit != 'true'
-        run: npm ci
+        run: yarn install --frozen-lockfile
 
       - name: "Generate commit message"
         id: commit-message
@@ -105,16 +107,16 @@ jobs:
 
       - name: "Run bash"
         run: |
-          npm run writer
-      
+          yarn writer
+
       - name: Deploy
         id: deploy
         uses: sma11black/hexo-action@v1.0.3
         with:
-            deploy_key: ${{ secrets.HEXO_DEPLOY_KEY }}
-            user_name: qian
-            user_email: xuqssq@163.com
-            commit_msg: ${{ steps.commit-message.outputs.message }}
+          deploy_key: ${{ secrets.HEXO_DEPLOY_KEY }}
+          user_name: qian
+          user_email: xuqssq@163.com
+          commit_msg: ${{ steps.commit-message.outputs.message }}
       - name: Get the output
         run: |
           echo "${{ steps.deploy.outputs.notify }}"
