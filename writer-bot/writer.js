@@ -236,7 +236,7 @@ const main = async () => {
       **请严格按照上述结构和Markdown规范写作。请勿添加多余说明。**
       `,
       });
-      fs.writeFileSync(outputPath, response.text);
+      fs.writeFileSync(outputPath, response.text.replace(/```markdown/g, "").replace(/```/g, ""));
       resolve(randomTopic);
     } catch (error) {
       reject(error);
