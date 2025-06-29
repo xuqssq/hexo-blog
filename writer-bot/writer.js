@@ -236,8 +236,16 @@ const main = async () => {
       **请严格按照上述结构和Markdown规范写作。请勿添加多余说明。**
       `,
       });
-      fs.writeFileSync(outputPath, response.text.replace(/```markdown/g, "").replace(/```/g, ""));
-      resolve(randomTopic);
+
+      if (response.text.length > 100) {
+        fs.writeFileSync(
+          outputPath,
+          response.text.replace(/```markdown/g, "").replace(/```/g, "")
+        );
+        resolve(randomTopic);
+      } else {
+        reject(new Error("文章生成失败"));
+      }
     } catch (error) {
       reject(error);
     }
